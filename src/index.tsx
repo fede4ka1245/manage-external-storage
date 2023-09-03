@@ -6,7 +6,9 @@ const ManageExternalStorage =
 
 export function checkManagePermission(): Promise<boolean> {
   if (Platform.OS === 'ios') {
-    return Promise.resolve(false);
+    return new Promise((resolve) => {
+      resolve(false);
+    });
   }
 
   return ManageExternalStorage.checkManagePermission();
@@ -14,7 +16,9 @@ export function checkManagePermission(): Promise<boolean> {
 
 export function requestManagePermission(): Promise<boolean> {
   if (Platform.OS === 'ios') {
-    return Promise.resolve(false);
+    return new Promise((resolve) => {
+      resolve(false);
+    });
   }
 
   return ManageExternalStorage.requestManagePermission();
