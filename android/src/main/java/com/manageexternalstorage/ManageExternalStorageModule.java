@@ -70,7 +70,13 @@ public class ManageExternalStorageModule extends ReactContextBaseJavaModule impl
             getReactApplicationContext().startActivityForResult(intent, REQUEST_CODE, null);
           }
       } else {
-          ActivityCompat.requestPermissions(getCurrentActivity(), new String[]{WRITE_EXTERNAL_STORAGE}, 100);
+        if (ActivityCompat.shouldShowRequestPermissionRationale(getCurrentActivity(), WRITE_EXTERNAL_STORAGE)) {
+          ActivityCompat.requestPermissions(getCurrentActivity(), new String[]{WRITE_EXTERNAL_STORAGE}, REQUEST_CODE);
+        } else {
+          int result = ContextCompat.checkSelfPermission(getReactApplicationContext(), READ_EXTERNAL_STORAGE);
+          int result1 = ContextCompat.checkSelfPermission(getReactApplicationContext(), WRITE_EXTERNAL_STORAGE);
+          this.promise.resolve(result == PackageManager.PERMISSION_GRANTED && result1 == PackageManager.PERMISSION_GRANTED);
+        }
       }
   }
 
